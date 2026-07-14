@@ -2,7 +2,14 @@
 
 Convert Shapefile (SHP) to GeoJSON format with ease and visualize on interactive map.
 
-**✨ Latest Update:** GeoJSON optimized! File size reduced from **27.59 MB → 0.21 MB** (99% reduction) using mapshaper. ⚡ Ultra-fast loading!
+**✨ Project Status: ✅ COMPLETE & WORKING**
+
+**Latest Updates:**
+- 🚀 GeoJSON optimized: **27.59 MB → 0.21 MB** (99% reduction)
+- 🌍 Hosted on GitHub Pages - ultra-fast loading
+- 🗺️ Interactive Leaflet map with OpenStreetMap tiles
+- ✅ All bugs fixed - Thailand boundary displays perfectly
+- 💚 100% Free & Open Source (Leaflet + OpenStreetMap)
 
 ## 🚀 Quick Links
 
@@ -49,9 +56,30 @@ This project provides a simple Node.js script to convert ESRI Shapefiles to GeoJ
 npm install
 ```
 
+## ⚡ Quick Start (2 Seconds)
+
+**Just want to view the map?**
+
+🌍 **[Open Thailand Map Viewer](https://prametkae-blip.github.io/SHP2GeOJson/Thailand_Pramet.html)** ← Click here!
+
+No installation, no setup, 100% free.
+
+---
+
 ## Usage
 
-### 1️⃣ Convert Shapefile to GeoJSON
+### 1️⃣ View the Interactive Map
+
+**Online (No Installation Needed):**
+- 🌍 **[Open Map Viewer](https://prametkae-blip.github.io/SHP2GeOJson/Thailand_Pramet.html)**
+- Works instantly in any browser
+- No software installation required
+
+**Local (If You Cloned the Repo):**
+- Open `Thailand_Pramet.html` in your web browser
+- Or double-click the file
+
+### 2️⃣ Convert Your Own Shapefile to GeoJSON
 
 Place your shapefile files in the `data/` directory:
 - `*.shp` - The main shapefile
@@ -277,12 +305,34 @@ new google.maps.Polygon({
 });
 ```
 
-## Tips for Conversion
+## 🔧 Tips for Conversion
 
 - **Large Shapefiles**: The conversion script handles large shapefiles efficiently
 - **Coordinate System**: The output is in WGS84 (EPSG:4326), standard for web mapping
-- **Performance**: GeoJSON files can be large; consider simplifying for web use
+- **Performance**: Use mapshaper to optimize GeoJSON for web use (99% size reduction!)
 - **Data Validation**: Always verify the output GeoJSON validity using tools like [geojsonlint.com](https://geojsonlint.com)
+
+## 🐛 Troubleshooting
+
+### Map doesn't load
+- ✅ **Solution:** Hard refresh with `Ctrl+Shift+R` (Windows) or `Cmd+Shift+R` (Mac)
+- ✅ Clear browser cache if still issues
+- ✅ Check F12 Console for error messages
+
+### GeoJSON file not loading
+- ✅ **Cause:** Browser cache showing old version
+- ✅ **Fix:** Use Incognito mode or clear cache
+- ✅ GitHub Pages may take 30-60 seconds to rebuild
+
+### Slow loading
+- ✅ **Cause:** Large GeoJSON file
+- ✅ **Fix:** Use mapshaper to simplify (see GeoJSON Optimization section)
+- ✅ Project GeoJSON is already optimized (0.21 MB)
+
+### Features don't show on map
+- ✅ Zoom out or use map controls
+- ✅ Check F12 Console for errors
+- ✅ Ensure GeoJSON loaded (check Network tab)
 
 ## Troubleshooting
 
