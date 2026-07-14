@@ -6,11 +6,11 @@ Convert Shapefile (SHP) to GeoJSON format with ease and visualize on Google Maps
 
 | Link | Description |
 |------|-------------|
-| **[📍 Open Viewer (jsDelivr)](https://cdn.jsdelivr.net/gh/prametkae-blip/SHP2GeOJson@master/output/Thailand_Pramet.html)** | Direct access - recommended way to view the map |
-| **[🌐 Open Viewer (HTML Preview)](https://htmlpreview.github.io/?https://raw.githubusercontent.com/prametkae-blip/SHP2GeOJson/master/output/Thailand_Pramet.html)** | Alternative viewer link |
+| **[📍 Open Viewer (jsDelivr)](https://cdn.jsdelivr.net/gh/prametkae-blip/SHP2GeOJson@master/output/Thailand_Pramet.html)** | ✅ Direct access - Open now! (No API key needed) |
+| **[🌐 Open Viewer (HTML Preview)](https://htmlpreview.github.io/?https://raw.githubusercontent.com/prametkae-blip/SHP2GeOJson/master/output/Thailand_Pramet.html)** | Alternative viewer link (No API key needed) |
 | **[📋 Showcase Page](https://claude.ai/code/artifact/9959a794-2dc8-47bd-adc3-763016999fd1)** | Interactive demo with preview and instructions |
 
-> **⚠️ Important:** Add your [Google Maps API key](https://console.cloud.google.com/) to the HTML file before viewing. See [Setup Instructions](#setup-instructions) below.
+> **✅ NO API KEY REQUIRED!** Now using Leaflet + OpenStreetMap (100% Free & Open Source)
 
 ## Overview
 
@@ -53,17 +53,14 @@ npm run convert
 
 The output GeoJSON file will be saved to `output/Thailand_Pramet.geojson`
 
-### 2️⃣ View GeoJSON on Google Maps
+### 2️⃣ View GeoJSON on Interactive Map
 
 Open `Thailand_Pramet.html` in a web browser to visualize the converted GeoJSON data.
 
-**Important:** You need to add your Google Maps API key to the `Thailand_Pramet.html` file:
-
-```html
-<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY"></script>
-```
-
-Replace `YOUR_GOOGLE_MAPS_API_KEY` with your actual API key from [Google Cloud Console](https://console.cloud.google.com/).
+**No setup required!** The viewer uses:
+- ✅ **Leaflet** - Free, open-source JavaScript mapping library
+- ✅ **OpenStreetMap** - Free tile layer
+- ✅ **No API keys** - Everything is 100% free!
 
 #### Features of the Web Viewer:
 - 🗺️ Interactive map with zoom and pan controls
@@ -124,9 +121,14 @@ The conversion creates a GeoJSON FeatureCollection containing:
 - Polygons
 - MultiPoint, MultiLineString, MultiPolygon
 
-## 🎨 Web Viewer Demo (Thailand_Pramet.html)
+## 🎨 Web Viewer Demo (Thailand_Pramet.html) - Powered by Leaflet
 
-The included `Thailand_Pramet.html` provides an interactive web-based viewer for your GeoJSON data:
+The included `Thailand_Pramet.html` provides an interactive web-based viewer for your GeoJSON data using **Leaflet** and **OpenStreetMap**:
+
+**Technology Stack:**
+- 🔴 **Leaflet** - Lightweight, open-source mapping library
+- 🌍 **OpenStreetMap** - Free, community-driven map tiles
+- 💚 **100% Free** - No API keys, no costs, no restrictions
 
 ### Viewer Components:
 - **Map Panel**: Google Maps displaying your GeoJSON features with color-coded visualization
@@ -179,35 +181,36 @@ Mobile View:
 
 ### Setup Instructions
 
-#### Step 1: Get Google Maps API Key
-1. Go to [Google Cloud Console](https://console.cloud.google.com/)
-2. Create a new project or select an existing one
-3. Enable the "Maps JavaScript API"
-4. Create an API Key in the Credentials section
-5. Copy your API key
+#### ⚡ Super Simple - Just Click & Open!
 
-#### Step 2: Update the HTML File
-Open `Thailand_Pramet.html` and find this line:
-```html
-<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY"></script>
+No configuration needed. Just pick your preferred method:
+
+**Option 1: Online (Easiest)**
+- Click: [📍 Open Viewer (jsDelivr)](https://cdn.jsdelivr.net/gh/prametkae-blip/SHP2GeOJson@master/output/Thailand_Pramet.html)
+- Everything loads from CDN - no installation required!
+
+**Option 2: Local Installation**
+```bash
+# 1. Clone the repository
+git clone https://github.com/prametkae-blip/SHP2GeOJson.git
+cd SHP2GeOJson
+
+# 2. Open in browser
+# Windows: start output/Thailand_Pramet.html
+# Mac: open output/Thailand_Pramet.html
+# Linux: xdg-open output/Thailand_Pramet.html
 ```
 
-Replace `YOUR_GOOGLE_MAPS_API_KEY` with your actual API key:
-```html
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDxxxxxxxxxxxxxxxxxxxxxxxxxx"></script>
-```
-
-#### Step 3: Open the Viewer
-- **Online**: Use [jsDelivr link](https://cdn.jsdelivr.net/gh/prametkae-blip/SHP2GeOJson@master/output/Thailand_Pramet.html) after updating API key
-- **Local**: Open `output/Thailand_Pramet.html` in your web browser
-- **Server**: Upload `output/` folder to your web server
+**Option 3: Web Server**
+- Upload `output/` folder to your web server
+- Access via: `https://yourserver.com/Thailand_Pramet.html`
 
 #### How to Use the Viewer:
-1. ✅ Ensure you have a valid Google Maps API key
-2. ✅ Update the API key in the HTML file
-3. ✅ Open the viewer link in your browser
-4. 🗺️ Interact with the map: zoom, pan, and explore your data
-5. 📊 Check the sidebar for feature statistics and geographic bounds
+1. ✅ Click the link or open HTML file
+2. 🗺️ Interact with the map: zoom, pan, click features
+3. 📊 Check sidebar for statistics and bounds
+4. 🌍 Powered by OpenStreetMap (free tiles)
+5. 🎯 No API keys, no subscriptions, 100% free!
 
 ### Browser Requirements:
 - Modern web browser (Chrome, Firefox, Safari, Edge)
