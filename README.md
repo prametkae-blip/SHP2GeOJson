@@ -45,9 +45,9 @@ The output GeoJSON file will be saved to `output/Thailand_Pramet.geojson`
 
 ### 2️⃣ View GeoJSON on Google Maps
 
-Open `index.html` in a web browser to visualize the converted GeoJSON data.
+Open `Thailand_Pramet.html` in a web browser to visualize the converted GeoJSON data.
 
-**Important:** You need to add your Google Maps API key to the `index.html` file:
+**Important:** You need to add your Google Maps API key to the `Thailand_Pramet.html` file:
 
 ```html
 <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY"></script>
@@ -76,7 +76,7 @@ npm install
 npm run convert
 
 # 4. Open in browser to view
-# Open index.html in your web browser
+# Open Thailand_Pramet.html in your web browser
 # Add your Google Maps API key first!
 ```
 
@@ -84,7 +84,7 @@ npm run convert
 
 ```
 SHP2GeOJson/
-├── index.html                    # Interactive web viewer
+├── Thailand_Pramet.html          # Interactive web viewer
 ├── convert.js                    # Main conversion script
 ├── package.json                  # Node.js dependencies
 ├── package-lock.json             # Dependency lock file
@@ -114,9 +114,9 @@ The conversion creates a GeoJSON FeatureCollection containing:
 - Polygons
 - MultiPoint, MultiLineString, MultiPolygon
 
-## Web Viewer Demo
+## 🎨 Web Viewer Demo (Thailand_Pramet.html)
 
-The included `index.html` provides an interactive web-based viewer for your GeoJSON data:
+The included `Thailand_Pramet.html` provides an interactive web-based viewer for your GeoJSON data:
 
 ### Viewer Components:
 - **Map Panel**: Google Maps displaying your GeoJSON features with color-coded visualization
@@ -128,17 +128,80 @@ The included `index.html` provides an interactive web-based viewer for your GeoJ
 - **Header**: Project branding and quick information
 - **Footer**: Links to GitHub repository
 
+### Viewer Interactions:
+
+#### 🗺️ Map Controls
+```
+- Zoom In/Out: Use mouse wheel or +/- buttons
+- Pan: Click and drag to move around the map
+- Double-Click: Zoom in to a location
+- Full Screen: Toggle full screen mode
+```
+
+#### 📊 Real-time Statistics
+```
+- Feature Count: Display number of features loaded
+- Geographic Bounds: Show min/max latitude and longitude
+- Auto-Update: Statistics update as map loads data
+```
+
+#### 🎯 Feature Visualization
+```
+- Color-Coded Features: Each feature has distinct color (#FF6B6B, #4ECDC4, etc.)
+- Polygon Display: Shows boundaries with semi-transparent fill
+- Interactive Hover: Features respond to user interaction
+- Automatic Bounds: Map centers on loaded features
+```
+
+#### 📱 Responsive Features
+```
+Desktop View:
+- Map takes 70% of screen width
+- Sidebar displays on right side (300px wide)
+- Full statistics panel visible
+
+Mobile View:
+- Map takes full width
+- Sidebar appears below map
+- Touch-friendly controls
+- Simplified layout for small screens
+```
+
 ### How to Use the Viewer:
 1. Ensure you have a valid Google Maps API key
-2. Update the API key in `index.html`
+2. Update the API key in `Thailand_Pramet.html`
 3. Place your GeoJSON file in the `output/` directory
-4. Open `index.html` in any modern web browser
+4. Open `Thailand_Pramet.html` in any modern web browser
 5. Interact with the map: zoom, pan, and explore your data
 
 ### Browser Requirements:
 - Modern web browser (Chrome, Firefox, Safari, Edge)
 - Internet connection (for Google Maps API)
 - JavaScript enabled
+
+### Code Example - Custom Styling:
+```javascript
+// In Thailand_Pramet.html, you can customize:
+
+// Colors for features
+const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8'];
+
+// Map initial zoom and center
+map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 5,
+    center: { lat: 15.8700, lng: 100.9925 }, // Thailand center
+});
+
+// Polygon styling
+new google.maps.Polygon({
+    strokeColor: color,
+    strokeOpacity: 0.8,
+    strokeWeight: 2,
+    fillColor: color,
+    fillOpacity: 0.35,  // Adjust transparency
+    map: map
+});
+```
 
 ## Tips for Conversion
 
