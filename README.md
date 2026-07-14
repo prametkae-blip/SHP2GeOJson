@@ -2,6 +2,16 @@
 
 Convert Shapefile (SHP) to GeoJSON format with ease and visualize on Google Maps.
 
+## 🚀 Quick Links
+
+| Link | Description |
+|------|-------------|
+| **[📍 Open Viewer (jsDelivr)](https://cdn.jsdelivr.net/gh/prametkae-blip/SHP2GeOJson@master/output/Thailand_Pramet.html)** | Direct access - recommended way to view the map |
+| **[🌐 Open Viewer (HTML Preview)](https://htmlpreview.github.io/?https://raw.githubusercontent.com/prametkae-blip/SHP2GeOJson/master/output/Thailand_Pramet.html)** | Alternative viewer link |
+| **[📋 Showcase Page](https://claude.ai/code/artifact/9959a794-2dc8-47bd-adc3-763016999fd1)** | Interactive demo with preview and instructions |
+
+> **⚠️ Important:** Add your [Google Maps API key](https://console.cloud.google.com/) to the HTML file before viewing. See [Setup Instructions](#setup-instructions) below.
+
 ## Overview
 
 This project provides a simple Node.js script to convert ESRI Shapefiles to GeoJSON format, which is more widely supported by web mapping libraries and GIS applications. Includes an interactive web viewer for visualizing the converted GeoJSON data on Google Maps.
@@ -167,12 +177,37 @@ Mobile View:
 - Simplified layout for small screens
 ```
 
-### How to Use the Viewer:
-1. Ensure you have a valid Google Maps API key
-2. Update the API key in `Thailand_Pramet.html`
-3. Place your GeoJSON file in the `output/` directory
-4. Open `Thailand_Pramet.html` in any modern web browser
-5. Interact with the map: zoom, pan, and explore your data
+### Setup Instructions
+
+#### Step 1: Get Google Maps API Key
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a new project or select an existing one
+3. Enable the "Maps JavaScript API"
+4. Create an API Key in the Credentials section
+5. Copy your API key
+
+#### Step 2: Update the HTML File
+Open `Thailand_Pramet.html` and find this line:
+```html
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY"></script>
+```
+
+Replace `YOUR_GOOGLE_MAPS_API_KEY` with your actual API key:
+```html
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDxxxxxxxxxxxxxxxxxxxxxxxxxx"></script>
+```
+
+#### Step 3: Open the Viewer
+- **Online**: Use [jsDelivr link](https://cdn.jsdelivr.net/gh/prametkae-blip/SHP2GeOJson@master/output/Thailand_Pramet.html) after updating API key
+- **Local**: Open `output/Thailand_Pramet.html` in your web browser
+- **Server**: Upload `output/` folder to your web server
+
+#### How to Use the Viewer:
+1. ✅ Ensure you have a valid Google Maps API key
+2. ✅ Update the API key in the HTML file
+3. ✅ Open the viewer link in your browser
+4. 🗺️ Interact with the map: zoom, pan, and explore your data
+5. 📊 Check the sidebar for feature statistics and geographic bounds
 
 ### Browser Requirements:
 - Modern web browser (Chrome, Firefox, Safari, Edge)
