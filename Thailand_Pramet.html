@@ -261,22 +261,44 @@
 
         // Load and display GeoJSON
         function loadGeoJSON() {
-            fetch(GEOJSON_URL)
-                .then(response => {
-                    if (!response.ok) throw new Error('Failed to load GeoJSON');
-                    return response.json();
-                })
-                .then(geojsonData => {
-                    displayGeoJSON(geojsonData);
-                    updateStats(geojsonData);
-                })
-                .catch(error => {
-                    console.error('Error loading GeoJSON:', error);
+            // Try multiple paths
+            const paths = [
+                './Thailand_Pramet.geojson',
+                './output/Thailand_Pramet.geojson',
+                '/SHP2GeOJson/Thailand_Pramet.geojson',
+                '/SHP2GeOJson/output/Thailand_Pramet.geojson'
+            ];
+
+            function tryLoad(pathIndex) {
+                if (pathIndex >= paths.length) {
+                    console.error('Failed to load GeoJSON from all paths');
                     document.getElementById('stats').innerHTML =
                         '<div style="color: #d32f2f; padding: 20px; text-align: center;">' +
-                        'Error loading map data. Make sure Thailand_Pramet.geojson exists in the output folder.' +
+                        'Error loading map data.' +
                         '</div>';
-                });
+                    return;
+                }
+
+                const url = paths[pathIndex];
+                console.log(`Trying to load from: ${url}`);
+
+                fetch(url)
+                    .then(response => {
+                        if (!response.ok) throw new Error(`Failed: ${response.status}`);
+                        return response.json();
+                    })
+                    .then(geojsonData => {
+                        console.log('GeoJSON loaded successfully from:', url);
+                        displayGeoJSON(geojsonData);
+                        updateStats(geojsonData);
+                    })
+                    .catch(error => {
+                        console.log(`Path ${url} failed:`, error.message);
+                        tryLoad(pathIndex + 1);
+                    });
+            }
+
+            tryLoad(0);
         }
 
         // Display GeoJSON on map
