@@ -8,11 +8,14 @@ Convert Shapefile (SHP) to GeoJSON format with ease and visualize on interactive
 - 🚀 **GeoJSON Optimized**: 27.59 MB → 0.21 MB (99% reduction) - Uses mapshaper
 - 🌍 **Hosted on GitHub Pages**: Ultra-fast loading, no setup needed
 - 🗺️ **Interactive Map**: Leaflet + OpenStreetMap (100% free, no API keys)
-- 📍 **Correct Projection**: WGS84 coordinates (±90°/±180°)
+- 📍 **Automatic Projection Fix**: 
+  - Uses **proj4js** for UTM Zone 47N → WGS84 conversion
+  - Coordinates automatically reprojected on load
+  - Displays correct values (±90°/±180°)
 - ✅ **All Bugs Fixed**: 
   - Leaflet bounds calculation fixed
-  - Coordinates properly projected
-  - Cache buster added for fresh loads
+  - Coordinates properly transformed
+  - Cache buster for fresh loads
 - 💚 **100% Free & Open Source**
 
 ## 🚀 Quick Links
@@ -41,13 +44,22 @@ This project provides a simple Node.js script to convert ESRI Shapefiles to GeoJ
 ## 🗺️ Features
 
 - **Shapefile to GeoJSON Conversion**: Batch convert SHP files to standard GeoJSON format
-- **Web Viewer**: Interactive Leaflet map visualization with side panel statistics
-- **Optimized GeoJSON**: 99% file size reduction using mapshaper (27.59 MB → 0.21 MB)
-- **Ultra-Fast Loading**: GitHub Pages deployment for instant access
-- **Responsive Design**: Works seamlessly on desktop and mobile devices
-- **Feature Support**: Handles Polygons, MultiPolygons, LineStrings, Points, and MultiPoints
-- **100% Free & Open Source**: Leaflet + OpenStreetMap, no API keys needed
-- **Property Preservation**: All shapefile attributes preserved in GeoJSON properties
+- **Automatic Projection Handling**: 
+  - Detects UTM Zone 47N from .prj file
+  - Real-time reprojection to WGS84 using proj4js
+  - No manual setup needed
+- **Web Viewer**: Interactive Leaflet map with side panel statistics
+- **Optimized GeoJSON**: 99% file size reduction (27.59 MB → 0.21 MB)
+- **Ultra-Fast Loading**: GitHub Pages deployment, instant access
+- **Responsive Design**: Works on desktop, tablet, and mobile
+- **Geometry Support**: Polygons, MultiPolygons, LineStrings, Points, MultiPoints
+- **Interactive Features**: 
+  - Click features to view properties
+  - Auto-fit bounds on load
+  - Zoom/pan/full screen controls
+- **Real-time Statistics**: Feature count, coordinate bounds displayed live
+- **100% Free & Open Source**: Leaflet + OpenStreetMap, no API keys required
+- **Property Preservation**: All shapefile attributes preserved in GeoJSON
 
 ## Requirements
 
@@ -157,15 +169,27 @@ SHP2GeOJson/
 
 ### Coordinate System & Projection
 - **Original Shapefile**: WGS 1984 UTM Zone 47N (meters)
-- **Converted Format**: WGS84 (EPSG:4326) - degrees
+- **Conversion Method**: 
+  - Server-side: Node.js shapefile library
+  - Client-side: **proj4js** for real-time reprojection
+- **Final Format**: WGS84 (EPSG:4326) - standard web coordinate system
 - **Coordinate Range**: Lat ±90°, Lng ±180°
-- **Used for**: Web mapping, standard for most GIS applications
+- **Projection String**: `+proj=utm +zone=47 +datum=WGS84 +units=m +no_defs`
+
+### Libraries & Tools
+- **Frontend**:
+  - Leaflet.js v1.9.4 (mapping library)
+  - proj4js v2.11.0 (coordinate transformation)
+  - OpenStreetMap (free tile layer)
+- **Backend**:
+  - Node.js (shapefile conversion)
+  - mapshaper (GeoJSON optimization)
 
 ### Browser Compatibility
-- **Leaflet.js**: v1.9.4 (via CDN)
-- **OpenStreetMap**: Free tile layer
 - **Tested on**: Chrome, Firefox, Safari, Edge
+- **Requirements**: ES6 JavaScript support
 - **Note:** Tracking Prevention may show warnings (normal, not an error)
+- **CDN**: Cloudflare (reliable, fast global delivery)
 
 ## 🎯 GeoJSON Optimization
 
@@ -377,23 +401,33 @@ new google.maps.Polygon({
 
 ## 📝 Version History
 
-### v1.0 - Final Release ✅
+### v1.1 - Projection Fix ✅ (Latest)
+- ✅ Added proj4js for automatic coordinate transformation
+- ✅ UTM Zone 47N → WGS84 real-time reprojection
+- ✅ Correct coordinate display (±90°/±180°)
+- ✅ Bounds calculation fixed
+- ✅ Cleaner HTML code
+- ✅ Better error handling
+
+### v1.0 - Initial Release ✅
 - ✅ GeoJSON optimized (0.21 MB)
 - ✅ GitHub Pages hosting
 - ✅ Leaflet interactive map
-- ✅ WGS84 proper projection
 - ✅ All bugs fixed
 - ✅ Complete documentation
 
-### Features Implemented
-- Shapefile to GeoJSON conversion (Node.js)
-- Interactive web viewer (Leaflet + OpenStreetMap)
-- Optimized file size (mapshaper)
-- GitHub Pages deployment
-- Responsive design
-- Bounds auto-fit
-- Feature popups
-- Real-time statistics
+### Key Milestones
+- ✅ Shapefile to GeoJSON conversion (Node.js + shapefile library)
+- ✅ Interactive web viewer (Leaflet.js + OpenStreetMap)
+- ✅ File size optimization (mapshaper - 99% reduction)
+- ✅ GitHub Pages deployment (instant, free hosting)
+- ✅ Responsive design (desktop/mobile/tablet)
+- ✅ Auto-fit bounds with Leaflet
+- ✅ Feature property popups
+- ✅ Real-time statistics panel
+- ✅ Coordinate projection support (proj4js)
+- ✅ Cache buster for fresh loads
+- ✅ Complete documentation
 
 ## License
 
