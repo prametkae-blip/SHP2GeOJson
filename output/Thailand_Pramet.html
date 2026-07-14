@@ -334,12 +334,12 @@
 
             // Fit map to all features
             if (featureBounds.length > 0) {
-                const group = new L.featureGroup([]);
-                featureBounds.forEach(bounds => {
-                    group.extend(bounds);
-                });
-                if (group.getBounds().isValid()) {
-                    map.fitBounds(group.getBounds(), { padding: [50, 50] });
+                let combinedBounds = featureBounds[0];
+                for (let i = 1; i < featureBounds.length; i++) {
+                    combinedBounds.extend(featureBounds[i]);
+                }
+                if (combinedBounds.isValid()) {
+                    map.fitBounds(combinedBounds, { padding: [50, 50] });
                 }
             }
         }
