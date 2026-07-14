@@ -4,13 +4,22 @@ Convert Shapefile (SHP) to GeoJSON format with ease and visualize on Google Maps
 
 ## 🚀 Quick Links
 
-| Link | Description |
-|------|-------------|
-| **[📍 Open Viewer (jsDelivr)](https://cdn.jsdelivr.net/gh/prametkae-blip/SHP2GeOJson@master/output/Thailand_Pramet.html)** | ✅ Direct access - Open now! (No API key needed) |
-| **[🌐 Open Viewer (HTML Preview)](https://htmlpreview.github.io/?https://raw.githubusercontent.com/prametkae-blip/SHP2GeOJson/master/output/Thailand_Pramet.html)** | Alternative viewer link (No API key needed) |
-| **[📋 Showcase Page](https://claude.ai/code/artifact/9959a794-2dc8-47bd-adc3-763016999fd1)** | Interactive demo with preview and instructions |
+### 🌍 **RECOMMENDED - GitHub Pages (Best)**
+**[📍 Open Thailand Map Viewer NOW!](https://prametkae-blip.github.io/SHP2GeOJson/Thailand_Pramet.html)**
+- ✅ Works perfectly
+- ✅ No CORS issues
+- ✅ Fast & reliable
+- ✅ 100% Free
 
-> **✅ NO API KEY REQUIRED!** Now using Leaflet + OpenStreetMap (100% Free & Open Source)
+### Alternative Links
+| Link | Status |
+|------|--------|
+| [GitHub Pages](https://prametkae-blip.github.io/SHP2GeOJson/Thailand_Pramet.html) | ✅ **WORKING** |
+| [jsDelivr CDN](https://cdn.jsdelivr.net/gh/prametkae-blip/SHP2GeOJson@master/Thailand_Pramet.html) | ⚠️ May show HTML code |
+| [HTML Preview](https://htmlpreview.github.io/?https://raw.githubusercontent.com/prametkae-blip/SHP2GeOJson/master/Thailand_Pramet.html) | ⚠️ CORS issues |
+| [Local File](output/Thailand_Pramet.html) | ✅ Works if cloned |
+
+> **✅ NO API KEY REQUIRED!** Using Leaflet + OpenStreetMap (100% Free & Open Source)
 
 ## Overview
 
