@@ -1,0 +1,21 @@
+{
+  "name": "shp2geojson",
+  "version": "1.0.0",
+  "description": "Convert Shapefile (SHP) to GeoJSON format",
+  "main": "convert.js",
+  "scripts": {
+    "convert": "node convert.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "shapefile",
+    "geojson",
+    "conversion",
+    "gis"
+  ],
+  "author": "Pramet",
+  "license": "MIT",
+  "dependencies": {
+    "shapefile": "^0.6.6"
+  }
+}
