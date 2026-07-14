@@ -1,418 +1,413 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SHP2GeoJSON - Thailand Map Viewer (Leaflet)</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SHP2GeoJSON - Thailand Map Viewer (Leaflet)</title>
 
-    <!-- Leaflet CSS & JS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.11.0/proj4.min.js"></script>
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+    .header {
+      background: rgba(255,255,255,0.95);
+      padding: 20px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      text-align: center;
+    }
 
-        .header {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
+    .header h1 {
+      color: #333;
+      margin-bottom: 5px;
+      font-size: 28px;
+    }
 
-        .header h1 {
-            color: #333;
-            margin-bottom: 5px;
-            font-size: 28px;
-        }
+    .header p {
+      color: #666;
+      font-size: 14px;
+    }
 
-        .header p {
-            color: #666;
-            font-size: 14px;
-        }
+    .badge {
+      display: inline-block;
+      background: #4ecdc4;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-left: 8px;
+    }
 
-        .badge {
-            display: inline-block;
-            background: #4ecdc4;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-left: 8px;
-        }
+    .container {
+      display: flex;
+      flex: 1;
+      max-width: 1400px;
+      margin: 20px auto;
+      width: 100%;
+      gap: 20px;
+      padding: 0 20px;
+    }
 
-        .container {
-            display: flex;
-            flex: 1;
-            max-width: 1400px;
-            margin: 20px auto;
-            width: 100%;
-            gap: 20px;
-            padding: 0 20px;
-        }
+    #map {
+      flex: 1;
+      min-height: 600px;
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      background: #f0f0f0;
+    }
 
-        #map {
-            flex: 1;
-            min-height: 600px;
-            border-radius: 10px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            background: #f0f0f0;
-            z-index: 1;
-        }
+    .sidebar {
+      width: 320px;
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      overflow-y: auto;
+      max-height: calc(100vh - 200px);
+    }
 
-        .sidebar {
-            width: 300px;
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            overflow-y: auto;
-            max-height: calc(100vh - 200px);
-        }
+    .sidebar h2 {
+      color: #333;
+      margin-bottom: 15px;
+      font-size: 18px;
+      border-bottom: 2px solid #667eea;
+      padding-bottom: 10px;
+    }
 
-        .sidebar h2 {
-            color: #333;
-            margin-bottom: 15px;
-            font-size: 18px;
-            border-bottom: 2px solid #667eea;
-            padding-bottom: 10px;
-        }
+    .stats {
+      background: #f5f5f5;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
 
-        .info-group {
-            margin-bottom: 15px;
-        }
+    .stat-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
 
-        .info-label {
-            font-weight: bold;
-            color: #667eea;
-            font-size: 12px;
-            text-transform: uppercase;
-            margin-bottom: 5px;
-        }
+    .stat-item:last-child {
+      margin-bottom: 0;
+    }
 
-        .info-value {
-            color: #333;
-            font-size: 14px;
-            word-break: break-word;
-        }
+    .stat-label {
+      color: #666;
+    }
 
-        .stats {
-            background: #f5f5f5;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
+    .stat-value {
+      font-weight: bold;
+      color: #667eea;
+    }
 
-        .stat-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
+    .info-group {
+      margin-bottom: 15px;
+    }
 
-        .stat-item:last-child {
-            margin-bottom: 0;
-        }
+    .info-label {
+      font-weight: bold;
+      color: #667eea;
+      font-size: 12px;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
 
-        .stat-label {
-            color: #666;
-        }
+    .info-value {
+      color: #333;
+      font-size: 14px;
+      word-break: break-word;
+    }
 
-        .stat-value {
-            font-weight: bold;
-            color: #667eea;
-        }
+    .footer {
+      background: rgba(255,255,255,0.95);
+      padding: 15px 20px;
+      text-align: center;
+      color: #666;
+      font-size: 12px;
+      margin-top: auto;
+    }
 
-        .footer {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 15px 20px;
-            text-align: center;
-            color: #666;
-            font-size: 12px;
-            margin-top: auto;
-        }
+    .footer a {
+      color: #667eea;
+      text-decoration: none;
+    }
 
-        .footer a {
-            color: #667eea;
-            text-decoration: none;
-        }
+    .footer a:hover {
+      text-decoration: underline;
+    }
 
-        .footer a:hover {
-            text-decoration: underline;
-        }
+    .loading {
+      text-align: center;
+      padding: 20px;
+      color: #666;
+    }
 
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-            }
+    .spinner {
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #667eea;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 10px;
+    }
 
-            .sidebar {
-                width: 100%;
-                max-height: 300px;
-            }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
 
-            #map {
-                min-height: 400px;
-            }
-
-            .header h1 {
-                font-size: 20px;
-            }
-        }
-
-        .loading {
-            text-align: center;
-            padding: 20px;
-            color: #666;
-        }
-
-        .spinner {
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #667eea;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 10px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
+    @media (max-width: 768px) {
+      .container { flex-direction: column; }
+      .sidebar { width: 100%; max-height: 300px; }
+      #map { min-height: 400px; }
+      .header h1 { font-size: 20px; }
+    }
+  </style>
 </head>
 <body>
-    <div class="header">
-        <h1>ðŸ—ºï¸ SHP2GeoJSON - Thailand Map Viewer <span class="badge">ðŸŒ Leaflet</span></h1>
-        <p>Visualize converted shapefile data â€¢ Powered by OpenStreetMap â€¢ 100% Free</p>
-    </div>
+  <div class="header">
+    <h1>SHP2GeoJSON - Thailand Map Viewer <span class="badge">Leaflet</span></h1>
+    <p>Visualize converted shapefile data • Powered by OpenStreetMap • 100% Free</p>
+  </div>
 
-    <div class="container">
-        <div id="map"></div>
-        <div class="sidebar">
-            <h2>Information</h2>
-            <div class="stats" id="stats">
-                <div class="loading">
-                    <div class="spinner"></div>
-                    Loading map data...
-                </div>
-            </div>
-            <div class="info-group">
-                <div class="info-label">Source File</div>
-                <div class="info-value">Thailand.shp</div>
-            </div>
-            <div class="info-group">
-                <div class="info-label">Output Format</div>
-                <div class="info-value">GeoJSON (WGS84)</div>
-            </div>
-            <div class="info-group">
-                <div class="info-label">Map Provider</div>
-                <div class="info-value">OpenStreetMap</div>
-            </div>
-            <div class="info-group">
-                <div class="info-label">Features</div>
-                <div class="info-value" id="featureCount">0</div>
-            </div>
-            <div class="info-group">
-                <div class="info-label">Map Library</div>
-                <div class="info-value">Leaflet</div>
-            </div>
+  <div class="container">
+    <div id="map"></div>
+    <div class="sidebar">
+      <h2>Information</h2>
+      <div class="stats" id="stats">
+        <div class="loading">
+          <div class="spinner"></div>
+          Loading map data...
         </div>
+      </div>
+
+      <div class="info-group">
+        <div class="info-label">Source File</div>
+        <div class="info-value">Thailand.shp</div>
+      </div>
+
+      <div class="info-group">
+        <div class="info-label">Output Format</div>
+        <div class="info-value">GeoJSON (WGS84)</div>
+      </div>
+
+      <div class="info-group">
+        <div class="info-label">Map Provider</div>
+        <div class="info-value">OpenStreetMap</div>
+      </div>
+
+      <div class="info-group">
+        <div class="info-label">Features</div>
+        <div class="info-value" id="featureCount">0</div>
+      </div>
+
+      <div class="info-group">
+        <div class="info-label">Map Library</div>
+        <div class="info-value">Leaflet</div>
+      </div>
     </div>
+  </div>
 
-    <div class="footer">
-        <p>Built with <strong>Node.js + Leaflet</strong> |
-           <a href="https://github.com/prametkae-blip/SHP2GeOJson" target="_blank">View on GitHub</a> |
-           ðŸ‡¹ðŸ‡­ Thailand GeoJSON Data
-        </p>
-    </div>
+  <div class="footer">
+    <p>Built with <strong>Node.js + Leaflet</strong> |
+      <a href="https://github.com/prametkae-blip/SHP2GeOJson" target="_blank">View on GitHub</a> |
+      Thailand GeoJSON Data
+    </p>
+  </div>
 
-    <script>
-        let map;
-        const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8', '#F7DC6F', '#BB8FCE'];
+  <script>
+    let map;
+    const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8', '#F7DC6F', '#BB8FCE'];
+    const sourceCrs = '+proj=utm +zone=47 +datum=WGS84 +units=m +no_defs';
+    const targetCrs = '+proj=longlat +datum=WGS84 +no_defs';
 
-        // Initialize map
-        function initMap() {
-            map = L.map('map').setView([15.8700, 100.9925], 5);
+    function initMap() {
+      map = L.map('map').setView([15.87, 100.99], 5);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors',
+        maxZoom: 19,
+        minZoom: 2
+      }).addTo(map);
 
-            // OpenStreetMap tile layer
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: 'Â© OpenStreetMap contributors',
-                maxZoom: 19,
-                minZoom: 2
-            }).addTo(map);
+      loadGeoJSON();
+    }
 
-            loadGeoJSON();
+    function reprojectGeoJSON(geojsonData) {
+      const projected = JSON.parse(JSON.stringify(geojsonData));
+
+      function transformCoords(coords) {
+        if (!Array.isArray(coords) || coords.length === 0) return coords;
+        if (typeof coords[0] === 'number') {
+          const [x, y] = coords;
+          const [lon, lat] = proj4(sourceCrs, targetCrs, [x, y]);
+          return [lon, lat];
         }
+        return coords.map(transformCoords);
+      }
 
-        // Load and display GeoJSON
-        function loadGeoJSON() {
-            const geojsonUrl = 'Thailand_Pramet.geojson?t=1784027068';
-
-            console.log('Loading GeoJSON from:', geojsonUrl);
-
-            fetch(geojsonUrl)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                    }
-                    return response.json();
-                })
-                .then(geojsonData => {
-                    console.log('âœ… GeoJSON loaded successfully');
-                    console.log('Features count:', geojsonData.features.length);
-                    displayGeoJSON(geojsonData);
-                    updateStats(geojsonData);
-                })
-                .catch(error => {
-                    console.error('âŒ Error loading GeoJSON:', error);
-                    document.getElementById('stats').innerHTML =
-                        '<div style="color: #d32f2f; padding: 20px; text-align: center;">' +
-                        'Error: ' + error.message +
-                        '</div>';
-                });
-        }
-
-        // Display GeoJSON on map
-        function displayGeoJSON(geojsonData) {
-            let colorIndex = 0;
-            const featureBounds = [];
-
-            geojsonData.features.forEach(feature => {
-                const color = colors[colorIndex % colors.length];
-                colorIndex++;
-
-                const geoJsonLayer = L.geoJSON(feature, {
-                    style: {
-                        color: color,
-                        weight: 2,
-                        opacity: 0.8,
-                        fillColor: color,
-                        fillOpacity: 0.35
-                    },
-                    pointToLayer: function(feature, latlng) {
-                        return L.circleMarker(latlng, {
-                            radius: 5,
-                            fillColor: color,
-                            color: color,
-                            weight: 2,
-                            opacity: 0.8,
-                            fillOpacity: 0.7
-                        });
-                    },
-                    onEachFeature: function(feature, layer) {
-                        let popupContent = '<div style="max-width: 250px;"><strong>Feature</strong><hr>';
-                        if (feature.properties) {
-                            for (let key in feature.properties) {
-                                if (feature.properties.hasOwnProperty(key)) {
-                                    popupContent += `<strong>${key}:</strong> ${feature.properties[key]}<br>`;
-                                }
-                            }
-                        }
-                        popupContent += '</div>';
-                        layer.bindPopup(popupContent);
-                    }
-                }).addTo(map);
-
-                if (geoJsonLayer.getBounds) {
-                    featureBounds.push(geoJsonLayer.getBounds());
-                }
-            });
-
-            // Fit map to all features
-            if (featureBounds.length > 0) {
-                let combinedBounds = featureBounds[0];
-                for (let i = 1; i < featureBounds.length; i++) {
-                    combinedBounds.extend(featureBounds[i]);
-                }
-                if (combinedBounds.isValid()) {
-                    map.fitBounds(combinedBounds, { padding: [50, 50] });
-                }
+      projected.features = (projected.features || []).map(feature => {
+        if (feature.geometry && feature.geometry.coordinates) {
+          return {
+            ...feature,
+            geometry: {
+              ...feature.geometry,
+              coordinates: transformCoords(feature.geometry.coordinates)
             }
+          };
         }
+        return feature;
+      });
 
-        // Update sidebar statistics
-        function updateStats(geojsonData) {
-            const featureCount = geojsonData.features.length;
-            let bounds = null;
+      return projected;
+    }
 
-            geojsonData.features.forEach(feature => {
-                const coords = getCoordinatesFromFeature(feature);
-                coords.forEach(coord => {
-                    if (!bounds) {
-                        bounds = {
-                            minLat: coord[1],
-                            maxLat: coord[1],
-                            minLng: coord[0],
-                            maxLng: coord[0]
-                        };
-                    } else {
-                        bounds.minLat = Math.min(bounds.minLat, coord[1]);
-                        bounds.maxLat = Math.max(bounds.maxLat, coord[1]);
-                        bounds.minLng = Math.min(bounds.minLng, coord[0]);
-                        bounds.maxLng = Math.max(bounds.maxLng, coord[0]);
-                    }
-                });
-            });
+    function loadGeoJSON() {
+      fetch('./Thailand_Pramet.geojson')
+        .then(res => {
+          if (!res.ok) throw new Error('Failed to load local GeoJSON');
+          return res.json();
+        })
+        .then(data => {
+          const projected = reprojectGeoJSON(data);
+          displayGeoJSON(projected);
+          updateStats(projected);
+        })
+        .catch(err => {
+          document.getElementById('stats').innerHTML =
+            '<div class="loading">Unable to load map data.<br>' + err.message + '</div>';
+          console.error(err);
+        });
+    }
 
-            const statsHtml = `
-                <div class="stat-item">
-                    <span class="stat-label">Features:</span>
-                    <span class="stat-value">${featureCount}</span>
-                </div>
-                ${bounds ? `
-                <div class="stat-item">
-                    <span class="stat-label">Lat Range:</span>
-                    <span class="stat-value">${bounds.minLat.toFixed(2)}Â° â†’ ${bounds.maxLat.toFixed(2)}Â°</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-label">Lng Range:</span>
-                    <span class="stat-value">${bounds.minLng.toFixed(2)}Â° â†’ ${bounds.maxLng.toFixed(2)}Â°</span>
-                </div>
-                ` : ''}
-            `;
+    function displayGeoJSON(geojsonData) {
+      let colorIndex = 0;
+      const featureBounds = [];
 
-            document.getElementById('stats').innerHTML = statsHtml;
-            document.getElementById('featureCount').textContent = featureCount;
-        }
+      geojsonData.features.forEach(feature => {
+        const color = colors[colorIndex % colors.length];
+        colorIndex++;
 
-        // Extract all coordinates from a feature
-        function getCoordinatesFromFeature(feature) {
-            const coords = [];
-            const geometry = feature.geometry;
-
-            function extractCoords(coord) {
-                if (typeof coord[0] === 'number') {
-                    coords.push(coord);
-                } else {
-                    coord.forEach(extractCoords);
-                }
+        const geoJsonLayer = L.geoJSON(feature, {
+          style: {
+            color,
+            weight: 2,
+            opacity: 0.8,
+            fillColor: color,
+            fillOpacity: 0.35
+          },
+          pointToLayer: (featureItem, latlng) => L.circleMarker(latlng, {
+            radius: 5,
+            fillColor: color,
+            color,
+            weight: 2,
+            opacity: 0.8,
+            fillOpacity: 0.7
+          }),
+          onEachFeature: (featureItem, layer) => {
+            let popupContent = '<div style="max-width:250px"><strong>Feature</strong><hr>';
+            if (featureItem.properties) {
+              Object.entries(featureItem.properties).forEach(([key, value]) => {
+                popupContent += `<strong>${key}:</strong> ${value}<br>`;
+              });
             }
+            popupContent += '</div>';
+            layer.bindPopup(popupContent);
+          }
+        }).addTo(map);
 
-            if (geometry.coordinates && geometry.coordinates.length > 0) {
-                extractCoords(geometry.coordinates);
-            }
-
-            return coords;
+        if (geoJsonLayer.getBounds) {
+          featureBounds.push(geoJsonLayer.getBounds());
         }
+      });
 
-        // Initialize when page loads
-        window.addEventListener('load', initMap);
-    </script>
+      if (featureBounds.length > 0) {
+        let combinedBounds = featureBounds[0];
+        for (let i = 1; i < featureBounds.length; i++) {
+          combinedBounds.extend(featureBounds[i]);
+        }
+        if (combinedBounds.isValid()) {
+          map.fitBounds(combinedBounds, { padding: [40, 40] });
+        }
+      }
+    }
+
+    function updateStats(geojsonData) {
+      const featureCount = geojsonData.features.length;
+      let bounds = null;
+
+      geojsonData.features.forEach(feature => {
+        const coords = getCoordinatesFromFeature(feature);
+        coords.forEach(coord => {
+          if (!bounds) {
+            bounds = {
+              minLat: coord[1],
+              maxLat: coord[1],
+              minLng: coord[0],
+              maxLng: coord[0]
+            };
+          } else {
+            bounds.minLat = Math.min(bounds.minLat, coord[1]);
+            bounds.maxLat = Math.max(bounds.maxLat, coord[1]);
+            bounds.minLng = Math.min(bounds.minLng, coord[0]);
+            bounds.maxLng = Math.max(bounds.maxLng, coord[0]);
+          }
+        });
+      });
+
+      document.getElementById('featureCount').textContent = featureCount;
+
+      const statsHtml = `
+        <div class="stat-item">
+          <span class="stat-label">Features:</span>
+          <span class="stat-value">${featureCount}</span>
+        </div>
+        ${bounds ? `
+          <div class="stat-item">
+            <span class="stat-label">Lat Range:</span>
+            <span class="stat-value">${bounds.minLat.toFixed(2)}° → ${bounds.maxLat.toFixed(2)}°</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Lng Range:</span>
+            <span class="stat-value">${bounds.minLng.toFixed(2)}° → ${bounds.maxLng.toFixed(2)}°</span>
+          </div>
+        ` : ''}
+      `;
+
+      document.getElementById('stats').innerHTML = statsHtml;
+    }
+
+    function getCoordinatesFromFeature(feature) {
+      const coords = [];
+      const geometry = feature.geometry;
+
+      function extractCoords(coord) {
+        if (typeof coord[0] === 'number') {
+          coords.push(coord);
+        } else if (Array.isArray(coord)) {
+          coord.forEach(extractCoords);
+        }
+      }
+
+      if (geometry && geometry.coordinates && geometry.coordinates.length > 0) {
+        extractCoords(geometry.coordinates);
+      }
+
+      return coords;
+    }
+
+    window.addEventListener('load', initMap);
+  </script>
 </body>
 </html>
-
-
