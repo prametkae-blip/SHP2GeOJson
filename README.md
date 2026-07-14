@@ -1,15 +1,17 @@
 # SHP2GeoJSON
 
-Convert Shapefile (SHP) to GeoJSON format with ease and visualize on Google Maps.
+Convert Shapefile (SHP) to GeoJSON format with ease and visualize on interactive map.
+
+**✨ Latest Update:** GeoJSON optimized! File size reduced from **27.59 MB → 0.21 MB** (99% reduction) using mapshaper. ⚡ Ultra-fast loading!
 
 ## 🚀 Quick Links
 
 ### 🌍 **RECOMMENDED - GitHub Pages (Best)**
 **[📍 Open Thailand Map Viewer NOW!](https://prametkae-blip.github.io/SHP2GeOJson/Thailand_Pramet.html)**
-- ✅ Works perfectly
+- ✅ **Ultra-fast loading** (0.21 MB optimized)
 - ✅ No CORS issues
-- ✅ Fast & reliable
-- ✅ 100% Free
+- ✅ No API keys required
+- ✅ 100% Free & Open Source
 
 ### Alternative Links
 | Link | Status |
@@ -28,9 +30,12 @@ This project provides a simple Node.js script to convert ESRI Shapefiles to GeoJ
 ## 🗺️ Features
 
 - **Shapefile to GeoJSON Conversion**: Batch convert SHP files to standard GeoJSON format
-- **Web Viewer**: Interactive Google Maps visualization with side panel statistics
-- **Responsive Design**: Works on desktop and mobile devices
+- **Web Viewer**: Interactive Leaflet map visualization with side panel statistics
+- **Optimized GeoJSON**: 99% file size reduction using mapshaper (27.59 MB → 0.21 MB)
+- **Ultra-Fast Loading**: GitHub Pages deployment for instant access
+- **Responsive Design**: Works seamlessly on desktop and mobile devices
 - **Feature Support**: Handles Polygons, MultiPolygons, LineStrings, Points, and MultiPoints
+- **100% Free & Open Source**: Leaflet + OpenStreetMap, no API keys needed
 - **Property Preservation**: All shapefile attributes preserved in GeoJSON properties
 
 ## Requirements
@@ -116,12 +121,34 @@ SHP2GeOJson/
     └── Thailand_Pramet.geojson   # Output GeoJSON (28.3 MB)
 ```
 
+## 🎯 GeoJSON Optimization
+
+### File Size Reduction
+The project includes optimized GeoJSON using **mapshaper**:
+
+| Version | Size | Status |
+|---------|------|--------|
+| Original | 27.59 MB | Archived as `.large` |
+| Optimized | 0.21 MB | **Active ⚡** |
+| Reduction | **99%** | ✅ Maintains quality |
+
+### How It Works
+```bash
+mapshaper Thailand_Pramet.geojson -simplify 2% keep-shapes -o format=geojson
+```
+
+- 2% simplification keeps Thailand boundary recognizable
+- Dramatically faster web loading
+- GitHub Pages friendly
+- Same features & properties preserved
+
 ## Output
 
 The conversion creates a GeoJSON FeatureCollection containing:
 - All features from the original shapefile
 - All attributes preserved as properties
 - Standard GeoJSON coordinate system (WGS84 / EPSG:4326)
+- **Optimized for web delivery** (0.21 MB)
 
 ## Supported Shapefile Types
 
